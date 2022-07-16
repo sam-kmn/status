@@ -1,27 +1,23 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react"
-import { IPost } from "../models/Posts";
+import { useStore } from "../utils/store";
 
+const initialValue = {
+  title: '',
+  body: '',
+}
 
-const NewPost = ({newPostEvent}: {newPostEvent: (data: IPost) => void}) => {
+const NewPost = () => {
+  
   const { data: session } = useSession()
-  
-  const [newPost, setNewPost ] = useState({
-    title: '',
-    body: '',
-  })
+  const addPost = useStore(state => state.addPost)
+  const [newPost, setNewPost ] = useState(initialValue)
+
   const handleInput = (evt: any) => setNewPost({...newPost, [evt.target.name]: evt.target.value})
-  
-  const addPost = async () => {
-    if ( !session || !newPost.title || !newPost.body) return
-    const res = await (await fetch(process.env.NEXT_PUBLIC_URL + '/api/posts', {
-      method: "POST",
-      body: JSON.stringify({...newPost, author: session.user?.name}),
-      headers: {'Content-Type': 'application/json'}
-    })).json()
-    
-    if (!res.status) return
-    newPostEvent(res.body)
+  const upload = async () => {
+    if ( !session?.user?.name || !newPost.title || !newPost.body) return
+    addPost({...newPost, author: session.user.name})
+    setNewPost(initialValue)
   }
 
   return session && (
@@ -29,7 +25,7 @@ const NewPost = ({newPostEvent}: {newPostEvent: (data: IPost) => void}) => {
       <input name="title" value={newPost.title} onChange={handleInput} type="text" placeholder="Title" className="text-lg font-semibold" />
       <textarea name="body" value={newPost.body} onChange={handleInput} placeholder="Share your thoughts" className="w-full max-h-20 resize-none" cols={30} rows={5} />
       <nav className="flex justify-end">
-        <button onClick={addPost} className="px-3 py-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition duration-200 rounded">Post</button>
+        <button onClick={upload} className="px-3 py-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition duration-200 rounded">Post</button>
       </nav>
     </div>
   )

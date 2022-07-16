@@ -1,44 +1,32 @@
-import dayjs from "dayjs";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useStore } from "../utils/store";
+import dayjs from "dayjs";
+
 import {BiLike} from 'react-icons/bi'
 import { BsThreeDots } from 'react-icons/bs'
-import { IPost } from "../models/Posts";
 
-const Post = ({post, editEvent}: {post:any, editEvent: (data: IPost) => void}) => {
+const Post = ({post}: {post:any}) => {
 
   const { data: session } = useSession()
   const [menu, setMenu] = useState(false)
   const isAuthor = useMemo(() => session?.user?.name === post.author, [session?.user?.name])
-
+  
+  
+  const editPost = useStore(state => state.editPost)
   const handleLike = async () => {
     if (!session) return
     let likes = [...post.likes]
 
     if (!post.likes) likes.push(session.user?.name)
-    else if (post.likes.includes(session?.user?.name)) {likes = likes.filter(user => user !== session.user?.name); console.log('user in likes');
+    else if (post.likes.includes(session?.user?.name)) {likes = likes.filter(user => user !== session.user?.name)
     }
     else likes.push(session.user?.name)
       
-    console.log(likes);
-    
-    const res = await editPost({...post, likes: likes})
-    if (res.status) editEvent(res.data)
+    editPost({...post, likes: likes})
   }
 
-  const editPost = async (data: any) => {
-    try {
-      const res = await (await fetch(process.env.NEXT_PUBLIC_URL + '/api/posts/' + post._id, {
-        method: "PUT",
-        body: JSON.stringify(data),
-        headers: {'Content-Type': 'application/json'}
-      })).json()
-      return res
-    } catch (error) {
-      alert(error)
-    }
-  }
 
   return post && (
     <div className="flex flex-col gap-4 relative bg-white rounded-lg shadow-xl p-5 w-full sm:w-5/6 md:w-4/6 lg:w-3/6 xl:w-2/6 ">
