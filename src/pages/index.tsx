@@ -23,7 +23,7 @@ export default function Component() {
 
 
   return session && (
-    <div className="container mx-auto flex flex-col items-center content-center gap-5 py-10 px-5 border">
+    <div className="container mx-auto flex flex-col items-center content-center gap-5 py-10 px-5">
 
       <NewPost />
 

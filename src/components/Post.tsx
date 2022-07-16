@@ -12,9 +12,9 @@ const Post = ({post}: {post:any}) => {
   const { data: session } = useSession()
   const [menu, setMenu] = useState(false)
   const isAuthor = useMemo(() => session?.user?.name === post.author, [session?.user?.name])
-  
-  
   const editPost = useStore(state => state.editPost)
+  const deletePost = useStore(state => state.deletePost)
+  
   const handleLike = async () => {
     if (!session) return
     let likes = [...post.likes]
@@ -45,7 +45,7 @@ const Post = ({post}: {post:any}) => {
       { menu && isAuthor && 
         <div className="flex flex-col text-sm absolute right-0 top-12 bg-neutral-100 rounded-l overflow-hidden">
           <div className="px-3 py-1 hover:bg-neutral-200">Edit</div>
-          <div className="px-3 py-1 hover:bg-neutral-200 text-red-500">Delete</div>
+          <div onClick={() => deletePost(post)} className="px-3 py-1 hover:bg-neutral-200 text-red-500">Delete</div>
         </div>
       }
       

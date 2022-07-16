@@ -6,7 +6,7 @@ interface IStore {
   setPosts: (posts: IPost[]) => void
   addPost: (post: IPost) => void
   editPost: (post: IPost) => void
-
+  deletePost: (post: IPost) => void
 
 }
 
@@ -31,5 +31,13 @@ export const useStore = create<IStore>((set) => ({
     })).json()
     if (!res.status) return
     set(state => ({ posts: state.posts.map(i => i._id === post._id ? res.data : i)}))
+  },
+  deletePost: async (post) => {
+    const res = await (await fetch(process.env.NEXT_PUBLIC_URL + '/api/posts/' + post._id, {
+      method: "DELETE",
+      headers: {'Content-Type': 'application/json'}
+    })).json()
+    if (!res.status) return
+    set(state => ({ posts: state.posts.filter(p => p._id !== post._id)}))
   }
 }))

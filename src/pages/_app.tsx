@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 
   return (<>
     <Head>
-      <title>No Name</title>
+      <title>Status</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
