@@ -9,14 +9,10 @@ export default function Component() {
   const { data: session } = useSession()
 
   const posts = useStore(state => state.posts)
-  const setPosts = useStore(state => state.setPosts)
+  const fetchPosts = useStore(state => state.fetchPosts)
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await fetch(process.env.NEXT_PUBLIC_URL + '/api/posts')
-      const posts = await res.json()
-      if (posts.status) setPosts(posts.data)
-    }
+    if (posts.length > 0) return
     fetchPosts()
   }, [])
   

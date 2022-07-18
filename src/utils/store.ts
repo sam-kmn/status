@@ -4,6 +4,8 @@ import create from 'zustand'
 interface IStore {
   posts: IPost[]
   setPosts: (posts: IPost[]) => void
+  fetchPosts: () => void,
+  fetchPost: (id: string | string[]) => void,
   addPost: (post: IPost) => void
   editPost: (post: IPost) => void
   deletePost: (post: IPost) => void
@@ -13,6 +15,19 @@ interface IStore {
 export const useStore = create<IStore>((set) => ({
   posts: [],
   setPosts: (posts) => set({ posts: posts }),
+  fetchPosts: async () => {
+    const res = await fetch(process.env.NEXT_PUBLIC_URL + '/api/posts')
+    const posts = await res.json()
+    if (!posts.status) return
+    set({ posts: posts.data })
+  },
+  fetchPost: async (id) => {
+    const res = await fetch(process.env.NEXT_PUBLIC_URL + '/api/posts/' + id)
+    const post = await res.json()
+    if (!post.status) return
+    set(state => ({ posts: [ post.data, ...state.posts ]}))
+    
+  },
   addPost: async (post) => {
     const res = await (await fetch(process.env.NEXT_PUBLIC_URL + '/api/posts', {
       method: "POST",

@@ -28,7 +28,7 @@ const Post = ({post}: {post:any}) => {
   }
 
 
-  return post && (
+  return post && ( <Link href={'/post/'+ post._id}>
     <div className="flex flex-col gap-4 relative bg-white rounded-lg shadow-xl p-5 w-full sm:w-5/6 md:w-4/6 lg:w-3/6 xl:w-2/6 ">
       
       {/* Author, Time, options */}
@@ -66,7 +66,7 @@ const Post = ({post}: {post:any}) => {
       </section>
 
     </div>
-
+    </Link>
   )
 }
 
