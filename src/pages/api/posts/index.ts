@@ -16,7 +16,7 @@ export default async function handler(
         const posts = await Posts.find({}).sort('-date')
         res.status(200).json({status: true, data: posts})
       } catch (error) {
-        res.status(400).json({status: false})
+        res.status(400).json({status: false, error: error})
       }    
       break
     }
@@ -26,7 +26,7 @@ export default async function handler(
         const post = await Posts.create(req.body)
         res.status(201).json({status: true, data: post})
       } catch (error) {
-        res.status(400).json({status: false})
+        res.status(400).json({status: false, error: error})
       }    
       break
     }

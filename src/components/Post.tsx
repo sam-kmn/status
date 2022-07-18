@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 
 import {BiLike} from 'react-icons/bi'
 import { BsThreeDots } from 'react-icons/bs'
+import { AiOutlineDelete, AiOutlineEdit, AiOutlineShareAlt } from 'react-icons/ai'
 
 const Post = ({post}: {post:any}) => {
 
@@ -29,11 +30,11 @@ const Post = ({post}: {post:any}) => {
 
 
   return post && ( <Link href={'/post/'+ post._id}>
-    <div className="flex flex-col gap-4 relative bg-white rounded-lg shadow-xl p-5 w-full sm:w-5/6 md:w-4/6 lg:w-3/6 xl:w-2/6 ">
+    <div className="flex flex-col gap-4 p-5 w-full relative bg-neutral-800 rounded-lg shadow-xl ">
       
       {/* Author, Time, options */}
       <section className="flex justify-between text-xs ">
-        <Link href={'/users/'+post.author}><button className="text-blue-500">{post.author}</button></Link>
+        <Link href={'/users/'+post.author}><button className="text-pink-500">{post.author}</button></Link>
         <div className="flex items-center gap-2">
           <div>{dayjs(post.date).format('DD/MM/YYYY HH:mm')}</div>
           {isAuthor && <BsThreeDots onClick={() => isAuthor && setMenu(!menu)} className="text-xl" />}
@@ -43,16 +44,16 @@ const Post = ({post}: {post:any}) => {
 
       {/* Menu */}
       { menu && isAuthor && 
-        <div className="flex flex-col text-sm absolute right-0 top-12 bg-neutral-100 rounded-l overflow-hidden">
-          <div className="px-3 py-1 hover:bg-neutral-200">Edit</div>
-          <div onClick={() => deletePost(post)} className="px-3 py-1 hover:bg-neutral-200 text-red-500">Delete</div>
+        <div className="flex flex-col text-sm absolute right-0 top-12 bg-neutral-900 rounded-l overflow-hidden">
+          <div className="flex items-center justify-start gap-1 px-5 py-2 hover:bg-black"><AiOutlineShareAlt/> Share</div>
+          <div className="flex items-center justify-start gap-1 px-5 py-2 hover:bg-black"><AiOutlineEdit /> Edit</div>
+          <div onClick={() => deletePost(post)} className="flex items-center justify-start gap-1 px-5 py-2 hover:bg-black text-red-500"><AiOutlineDelete /> Delete</div>
         </div>
       }
       
       {/* Content */}
-      <section>
-        <header className="text-lg font-semibold">{post.title}</header>
-        <p>{post.body}</p>
+      <section className="text-2xl md:text-3xl py-3 font-semibold">
+        {post.body}
       </section>
       
       {/* Comments, Likes, etc. */}
@@ -61,7 +62,7 @@ const Post = ({post}: {post:any}) => {
 
         <div className="flex items-center justify-center gap-2">
           <div className="text-lg">{post.likes.length}</div>
-          <button onClick={handleLike} className="text-2xl hover:scale-110 hover:-rotate-12 transition duration-200"><BiLike /></button>
+          <button onClick={handleLike} className="text-2xl hover:text-pink-500 hover:scale-110 hover:-rotate-12 transition duration-200"><BiLike /></button>
         </div>
       </section>
 

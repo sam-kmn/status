@@ -13,9 +13,12 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     </Head>
 
     <SessionProvider session={session}>
-      <div className='w-screen h-screen flex flex-col overflow-auto bg-blue-50 text-black'>
+      <div className='w-screen h-screen flex flex-col items-center bg-neutral-900 text-white'>
         <Navbar />  
-        <Component {...pageProps} />
+        <div className='h-full w-full sm:w-10/12 md:w-8/12 lg:w-6/12 overflow-auto border-pink-300'>
+          <Component {...pageProps} />
+
+        </div>
       </div>
     </SessionProvider>
   </>)

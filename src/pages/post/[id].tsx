@@ -26,7 +26,7 @@ const Post = () => {
     editPost({
       ...data, 
       comments: [
-        ...data.comments, 
+        ...(data.comments ? data.comments : []), 
         {
           author: session.user.name,
           author_image: session.user.image,
@@ -41,25 +41,29 @@ const Post = () => {
   useEffect(() => {
     if (posts.length > 0) return setData(isStored)
     fetchPosts()
-
   }, [posts, isStored]) 
+
+  useEffect(() => {
+    console.log(data);
+    
+  }, [data])
 
 
 
   return data && (
-    <div className='flex-1 flex flex-col gap-5 justify-center items-center container mx-auto  border-red-500 p-5'>
-
+    <div className='h-full flex flex-col gap-5 justify-start items-center overflow-scroll p-5'>
+      
       <PostComponent post={data} />
       
-      <div className='flex flex-col gap-8 bg-white rounded-lg shadow-xl w-full sm:w-5/6 md:w-4/6 lg:w-3/6 xl:w-2/6 p-5'>
+      <div className='flex flex-col gap-8 w-full p-5 bg-neutral-800 rounded-lg shadow-xl '>
         <form onSubmit={comment} className="flex gap-2 items-center justify-between">
-          <input ref={commentRef} type="text" placeholder='Write comment' className='flex-1' />
+          <input ref={commentRef} type="text" placeholder='Write comment' className='flex-1 bg-inherit' />
           <button type='submit' className=''>
-            <FiSend className='text-xl rotate-45' />
+            <FiSend className='text-xl rotate-45 hover:text-pink-500 transition duration-200 ' />
           </button>
         </form>
 
-        {data.comments && data.comments.map(comment => <Comment data={comment} />)}
+        {data.comments && data.comments.map(comment => <Comment key={comment._id} data={comment} />)}
 
       </div>
 

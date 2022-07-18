@@ -9,17 +9,15 @@ export interface IComment {
 }
 
 export interface IPost {
-  title: string,
   author: string
   body: string,
-  comments: IComment[],
+  comments?: IComment[],
   likes?: string[],
   date?: string,
   _id?: string
 }
 
 const PostSchema = new Schema<IPost>({
-  title:  {type: String, required: true},
   author: {type: String, required: true},
   body:   {type: String, required: true},
   comments: [

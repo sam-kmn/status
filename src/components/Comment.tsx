@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 
 const Comment = ({data}: {data: IComment}) => {
   return (
-    <div key={data._id} className='flex flex-col gap-2'>
+    <div className='flex flex-col gap-2'>
         <div className='flex items-center justify-between w-full text-neutral-500 font-semibold text-sm'>
 
           <Link href={'/user/' + data.author}>

@@ -27,18 +27,16 @@ const Login = () => {
   }
 
   return (
-    <div className="container mx-auto flex-1 flex justify-center items-center">
+    <div className="h-full flex justify-center items-center">
       <form onSubmit={submit} className="flex-1 flex flex-col max-w-xs gap-3">
         <header className="text-4xl font-semibold text-center mb-5">Sign In</header>
-        {message &&
-          <div className="bg-red-300 rounded text-center p-3">{message}</div>
-        }
+        {message && <div className="bg-red-300 rounded text-center p-3">{message}</div> }
         
-        <input required value={credentials.email} onChange={handleInput} name="email" type="email" placeholder="Email" className="px-3 py-1 rounded"/>
-        <input required value={credentials.password} onChange={handleInput} name="password" type="password" placeholder="Password" className="px-3 py-1 rounded"/>
-        <button type="submit" className="bg-blue-500 py-2 rounded text-white text-lg font-semibold">Submit</button>
+        <input required value={credentials.email} onChange={handleInput} name="email" type="email" placeholder="Email" className="px-3 py-2 rounded bg-neutral-800"/>
+        <input required value={credentials.password} onChange={handleInput} name="password" type="password" placeholder="Password" className="px-3 py-2 rounded bg-neutral-800"/>
+        <button type="submit" className="bg-gradient-to-r from-purple-400 to-pink-600 py-2 rounded text-white text-lg font-semibold">Submit</button>
         <Link href='/register'>
-          <button className="text-center text-neutral-500 hover:text-black transition duration-200">You havn't registered yet?</button>
+          <button className="text-center text-neutral-500 hover:text-white transition duration-200">You havn't registered yet?</button>
         </Link>
       </form>
     </div>
