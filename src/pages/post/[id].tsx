@@ -6,6 +6,7 @@ import PostComponent from '../../components/Post'
 import { FiSend } from 'react-icons/fi'
 import { useSession } from 'next-auth/react'
 import Comment from '../../components/Comment'
+import { IComment } from '../../models/Posts'
 
 const Post = () => {
   
@@ -38,15 +39,20 @@ const Post = () => {
 
   }
 
+  const deleteComment = (comment: IComment) => {
+    console.log(comment);
+    if (!data || !comment) return
+    editPost({
+      ...data,
+      comments: data.comments!.filter(c => c._id !== comment._id)
+    })
+
+  }
+
   useEffect(() => {
     if (posts.length > 0) return setData(isStored)
     fetchPosts()
   }, [posts, isStored]) 
-
-  useEffect(() => {
-    console.log(data);
-    
-  }, [data])
 
 
 
@@ -63,7 +69,7 @@ const Post = () => {
           </button>
         </form>
 
-        {data.comments && data.comments.map(comment => <Comment key={comment._id} data={comment} />)}
+        {data.comments && data.comments.map(comment => <Comment key={comment._id} data={comment} deleteComment={deleteComment} />)}
 
       </div>
 
