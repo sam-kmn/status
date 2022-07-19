@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { IPost } from "../models/Posts"
+import { IPost } from "../../models/Posts"
 import Modal from "./Modal"
 
 interface IEditModal {
