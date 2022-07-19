@@ -54,7 +54,7 @@ const Post = () => {
   useEffect(() => {
     if (posts.length === 0) fetchPosts()
     else if (isStored) setData(isStored)
-    else router.push('/error')
+    else router.push('/')
   }, [posts, isStored]) 
 
 

@@ -4,14 +4,15 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useStore } from "../utils/store";
 import dayjs from "dayjs";
+import { IPost } from "../models/Posts";
 
-import ShareModal from "./ShareModal";
 import {BiLike} from 'react-icons/bi'
 import { BsThreeDots } from 'react-icons/bs'
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineShareAlt } from 'react-icons/ai'
-import EditModal from "./EditModal";
-import { IPost } from "../models/Posts";
-import DeleteModal from "./DeleteModal";
+
+import EditModal from "./Modals/EditModal";
+import ShareModal from "./Modals/ShareModal";
+import DeleteModal from "./Modals/DeleteModal";
 
 const Post = ({post}: {post:any}) => {
 
@@ -42,7 +43,6 @@ const Post = ({post}: {post:any}) => {
 
   const handleDelete = () => {
     if (session?.user?.name !== post.author) return 
-    router.push('/')
     deletePost(post)
   }
 
@@ -76,7 +76,7 @@ const Post = ({post}: {post:any}) => {
       }
       
       {/* Content */}
-      <section className="text-2xl md:text-3xl py-3 font-semibold">
+      <section className="text-2xl md:text-3xl py-3 font-semibold whitespace-pre-wrap">
         {post.body}
       </section>
       

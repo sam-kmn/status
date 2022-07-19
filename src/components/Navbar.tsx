@@ -10,7 +10,7 @@ const Navbar = () => {
 
   return (
     <div className="w-full bg-neutral-800 text-white">
-      <nav className="container mx-auto flex justify-between items-center py-3 px-5">
+      <nav className="container mx-auto flex justify-between items-center gap-5 py-3 px-5">
 
         {/* Brand */}
         <Link href={'/'}>
@@ -22,8 +22,12 @@ const Navbar = () => {
 
 
         {session?.user ? <>
-          <input type="text" className="p-2 px-5 flex-1 max-w-md bg-neutral-700 rounded-full placeholder:text-blue-100" placeholder="Search by hashtag"  />
-          <div className="flex gap-8">
+        
+          {/* Search */}
+          {/* <input type="text" className="p-2 px-5 flex-1 max-w-md bg-neutral-700 rounded-full placeholder:text-blue-100" placeholder="Search by hashtag"  /> */}
+          
+          {/* User and Logout */}
+          <div className="flex gap-4">
             <Link href={'/user/'+session.user.name}>
               <img src={session.user?.image!} className='w-10 h-10 rounded-full cursor-pointer' alt="" />
             </Link>

@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     <SessionProvider session={session}>
       <div className='w-screen h-screen flex flex-col items-center bg-neutral-900 text-white'>
         <Navbar />  
-        <div className='h-full w-full sm:w-10/12 md:w-8/12 lg:w-6/12 overflow-auto border-pink-300'>
+        <div className='h-full w-full sm:w-10/12 md:w-8/12 lg:w-6/12 overflow-auto  border-pink-300'>
           <Component {...pageProps} />
 
         </div>
