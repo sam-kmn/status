@@ -1,15 +1,21 @@
-import Link from "next/link";
 import { useMemo, useState } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useStore } from "../utils/store";
 import dayjs from "dayjs";
 
+import ShareModal from "./ShareModal";
 import {BiLike} from 'react-icons/bi'
 import { BsThreeDots } from 'react-icons/bs'
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineShareAlt } from 'react-icons/ai'
+import EditModal from "./EditModal";
+import { IPost } from "../models/Posts";
+import DeleteModal from "./DeleteModal";
 
 const Post = ({post}: {post:any}) => {
 
+  const router = useRouter()
   const { data: session } = useSession()
   const [menu, setMenu] = useState(false)
   const isAuthor = useMemo(() => session?.user?.name === post.author, [session?.user?.name])
@@ -28,6 +34,24 @@ const Post = ({post}: {post:any}) => {
     editPost({...post, likes: likes})
   }
 
+  const handleEdit = (data: IPost) => {
+    if (session?.user?.name !== post.author) return 
+    if (data.body === post.body) return 
+    editPost(data)
+  }
+
+  const handleDelete = () => {
+    if (session?.user?.name !== post.author) return 
+    router.push('/')
+    deletePost(post)
+  }
+
+  const [modals, setModals] = useState({
+    share: false,
+    edit: false,
+    delete: false
+  })
+  const switchModal = (name: string, value: boolean) => setModals({...modals, [name]: value})
 
   return post && ( <Link href={'/post/'+ post._id}>
     <div className="flex flex-col gap-4 p-5 w-full relative bg-neutral-800 rounded-lg shadow-xl ">
@@ -44,10 +68,10 @@ const Post = ({post}: {post:any}) => {
 
       {/* Menu */}
       { menu && isAuthor && 
-        <div className="flex flex-col text-sm absolute right-0 top-12 bg-neutral-900 rounded-l overflow-hidden">
-          <div className="flex items-center justify-start gap-1 px-5 py-2 hover:bg-black"><AiOutlineShareAlt/> Share</div>
-          <div className="flex items-center justify-start gap-1 px-5 py-2 hover:bg-black"><AiOutlineEdit /> Edit</div>
-          <div onClick={() => deletePost(post)} className="flex items-center justify-start gap-1 px-5 py-2 hover:bg-black text-red-500"><AiOutlineDelete /> Delete</div>
+        <div className="flex flex-col text-sm absolute right-0 top-12 bg-neutral-900 rounded-l overflow-hidden z-20">
+          <div onClick={() => switchModal('share', true)} className="flex items-center justify-start gap-1 px-5 py-2 hover:bg-black"><AiOutlineShareAlt/> Share</div>
+          <div onClick={() => switchModal('edit', true)} className="flex items-center justify-start gap-1 px-5 py-2 hover:bg-black"><AiOutlineEdit /> Edit</div>
+          <div onClick={() => switchModal('delete', true)} className="flex items-center justify-start gap-1 px-5 py-2 hover:bg-black text-red-500"><AiOutlineDelete /> Delete</div>
         </div>
       }
       
@@ -62,11 +86,15 @@ const Post = ({post}: {post:any}) => {
 
         <div className="flex items-center justify-center gap-2">
           <div className="text-lg">{post.likes.length}</div>
-          <button onClick={handleLike} className="text-2xl hover:text-pink-500 hover:scale-110 hover:-rotate-12 transition duration-200"><BiLike /></button>
+          <button onClick={() => session ? handleLike() : router.push('/login')} className="text-2xl hover:text-pink-500 hover:scale-110 hover:-rotate-12 transition duration-200"><BiLike /></button>
         </div>
       </section>
 
+      <ShareModal state={modals.share} closeEvent={() => switchModal('share', false)} />
+      <EditModal state={modals.edit} post={post} submitEvent={handleEdit} closeEvent={() => switchModal('edit', false)} />
+      <DeleteModal state={modals.delete} closeEvent={() => switchModal('delete', false)} submitEvent={handleDelete} />
     </div>
+
     </Link>
   )
 }

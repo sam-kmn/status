@@ -21,7 +21,6 @@ const Login = () => {
     setMessage('')
     const options = {redirect: false, email: credentials.email, password: credentials.password  }
     const res = await signIn('credentials', options)
-    console.log(res);
     if (res?.error) return setMessage(res.error) 
     else if (res?.ok) router.push('/')
   }

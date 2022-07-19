@@ -15,10 +15,12 @@ const Post = () => {
   const {id} = router.query
 
   const posts = useStore(state => state.posts)
-  const isStored = useMemo(() => posts.find(post => post._id === id), [posts])
-  const [data, setData] = useState(isStored)
   const fetchPosts = useStore(state => state.fetchPosts)
   const editPost = useStore(state => state.editPost)
+
+  const isStored = useMemo(() => posts.find(post => post._id === id), [posts])
+  const [data, setData] = useState(isStored)
+
 
   const commentRef = useRef<any>()
   const comment = (event:any) => {
@@ -50,32 +52,35 @@ const Post = () => {
   }
 
   useEffect(() => {
-    if (posts.length > 0) return setData(isStored)
-    fetchPosts()
+    if (posts.length === 0) fetchPosts()
+    else if (isStored) setData(isStored)
+    else router.push('/error')
   }, [posts, isStored]) 
 
 
 
-  return data && (
+  return data && (<>
     <div className='h-full flex flex-col gap-5 justify-start items-center overflow-scroll p-5'>
       
       <PostComponent post={data} />
       
       <div className='flex flex-col gap-8 w-full p-5 bg-neutral-800 rounded-lg shadow-xl '>
-        <form onSubmit={comment} className="flex gap-2 items-center justify-between">
-          <input ref={commentRef} type="text" placeholder='Write comment' className='flex-1 bg-inherit' />
-          <button type='submit' className=''>
-            <FiSend className='text-xl rotate-45 hover:text-pink-500 transition duration-200 ' />
-          </button>
-        </form>
-
+        {session && (
+          <form onSubmit={comment} className="flex gap-2 items-center justify-between">
+            <input ref={commentRef} type="text" placeholder='Write comment' className='flex-1 bg-inherit' />
+            <button type='submit' className=''>
+              <FiSend className='text-xl rotate-45 hover:text-pink-500 transition duration-200 ' />
+            </button>
+          </form>
+        )}
         {data.comments && data.comments.map(comment => <Comment key={comment._id} data={comment} deleteComment={deleteComment} />)}
 
       </div>
-
-
     </div>
-  )
+
+
+
+  </>)
 }
 
 export default Post
