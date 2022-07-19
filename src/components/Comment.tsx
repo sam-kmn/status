@@ -11,7 +11,7 @@ const Comment = ({data, deleteComment}: {data: IComment, deleteComment: (comment
   const { data: session } = useSession()
 
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='flex flex-col gap-3 p-5 border-t border-neutral-700 '>
         <div className='flex items-center justify-between w-full text-neutral-500 font-semibold text-sm'>
 
           <Link href={'/user/' + data.author}>
