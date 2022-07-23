@@ -2,6 +2,7 @@ import { IPost } from './../models/Posts';
 import create from 'zustand'
 
 interface IStore {
+  loading: boolean,
   posts: IPost[]
   setPosts: (posts: IPost[]) => void
   fetchPosts: () => void,
@@ -13,13 +14,15 @@ interface IStore {
 }
 
 export const useStore = create<IStore>((set) => ({
+  loading: false,
   posts: [],
   setPosts: (posts) => set({ posts: posts }),
   fetchPosts: async () => {
+    set({ loading: true })
     const res = await fetch(process.env.NEXT_PUBLIC_URL + '/api/posts')
     const posts = await res.json()
     if (!posts.status) return
-    set({ posts: posts.data })
+    set({ posts: posts.data, loading: false })
   },
   fetchPost: async (id) => {
     const res = await fetch(process.env.NEXT_PUBLIC_URL + '/api/posts/' + id)

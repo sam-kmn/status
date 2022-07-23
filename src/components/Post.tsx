@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useStore } from "../utils/store";
-import dayjs from "dayjs";
 import { IPost } from "../models/Posts";
+import dayjs from "dayjs";
 
 import {BiLike} from 'react-icons/bi'
 import { BsThreeDots } from 'react-icons/bs'
@@ -53,7 +53,7 @@ const Post = ({post}: {post:any}) => {
   })
   const switchModal = (name: string, value: boolean) => setModals({...modals, [name]: value})
 
-  return post && ( <Link href={'/post/'+ post._id}>
+  return post && ( 
     <div className="flex flex-col gap-4 p-5 w-full relative bg-neutral-800 rounded-lg shadow-xl ">
       
       {/* Author, Time, options */}
@@ -68,7 +68,7 @@ const Post = ({post}: {post:any}) => {
 
       {/* Menu */}
       { menu && isAuthor && 
-        <div className="flex flex-col text-sm absolute right-0 top-12 bg-neutral-900 rounded-l overflow-hidden z-20">
+        <div className="flex flex-col md:text-sm absolute right-0 top-12 bg-neutral-900 rounded-l overflow-hidden z-20">
           <div onClick={() => switchModal('share', true)} className="flex items-center justify-start gap-1 px-5 py-2 hover:bg-black"><AiOutlineShareAlt/> Share</div>
           <div onClick={() => switchModal('edit', true)} className="flex items-center justify-start gap-1 px-5 py-2 hover:bg-black"><AiOutlineEdit /> Edit</div>
           <div onClick={() => switchModal('delete', true)} className="flex items-center justify-start gap-1 px-5 py-2 hover:bg-black text-red-500"><AiOutlineDelete /> Delete</div>
@@ -94,8 +94,6 @@ const Post = ({post}: {post:any}) => {
       <EditModal state={modals.edit} post={post} submitEvent={handleEdit} closeEvent={() => switchModal('edit', false)} />
       <DeleteModal state={modals.delete} closeEvent={() => switchModal('delete', false)} submitEvent={handleDelete} />
     </div>
-
-    </Link>
   )
 }
 

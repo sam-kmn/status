@@ -23,7 +23,7 @@ const Comment = ({data, deleteComment}: {data: IComment, deleteComment: (comment
 
           <div className="flex items-center gap-2 ">
             <div>{dayjs(data.date).format('DD/MM/YYYY HH:mm:ss')}</div>
-            { session?.user?.name === data.author && <button onClick={() => deleteComment(data)}><FiDelete className="text-red-400" /></button>}
+            { session?.user?.name === data.author && <button onClick={() => deleteComment(data)}><FiDelete className="text-red-400 text-lg" /></button>}
           </div>
 
         </div>
