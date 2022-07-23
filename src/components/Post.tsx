@@ -58,7 +58,7 @@ const Post = ({post}: {post:any}) => {
       
       {/* Author, Time, options */}
       <section className="flex justify-between text-xs ">
-        <Link href={'/users/'+post.author}><button className="text-pink-500">{post.author}</button></Link>
+        <Link href={'/user/'+post.author_id}><button className="text-pink-500">{post.author}</button></Link>
         <div className="flex items-center gap-2">
           <div>{dayjs(post.date).format('DD/MM/YYYY HH:mm')}</div>
           {isAuthor && <BsThreeDots onClick={() => isAuthor && setMenu(!menu)} className="text-xl" />}

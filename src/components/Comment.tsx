@@ -3,7 +3,6 @@ import Link from 'next/link'
 import dayjs from 'dayjs'
 import { FiDelete } from "react-icons/fi"
 import { useSession } from "next-auth/react"
-import { useStore } from "../utils/store"
 
 
 const Comment = ({data, deleteComment}: {data: IComment, deleteComment: (comment:IComment) => void}) => {
@@ -14,7 +13,7 @@ const Comment = ({data, deleteComment}: {data: IComment, deleteComment: (comment
     <div className='flex flex-col gap-3 p-5 border-t border-neutral-700 '>
         <div className='flex items-center justify-between w-full text-neutral-500 font-semibold text-sm'>
 
-          <Link href={'/user/' + data.author}>
+          <Link href={'/user/' + data.author_id}>
             <div className='flex gap-3 items-center '>
               <img src={data.author_image} className='w-8 h-8 object-cover rounded-full'  alt="" />
               <div className=''>{data.author}</div>
@@ -27,7 +26,7 @@ const Comment = ({data, deleteComment}: {data: IComment, deleteComment: (comment
           </div>
 
         </div>
-      <div className='whitespace-normal break-all'>{data.comment}</div>
+      <div className='whitespace-normal break-all'>{data.body}</div>
     </div>
   )
 }

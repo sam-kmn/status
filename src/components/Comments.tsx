@@ -1,9 +1,9 @@
 import React, { useRef } from 'react'
-import { useStore } from '../utils/store'
-import { FiSend } from 'react-icons/fi'
 import { useSession } from 'next-auth/react'
-import Comment from './Comment'
+import { useStore } from '../utils/store'
 import { IComment, IPost } from '../models/Posts'
+import Comment from './Comment'
+import { FiSend } from 'react-icons/fi'
 
 const Comments = ({data}: {data:IPost}) => {
 
@@ -12,14 +12,17 @@ const Comments = ({data}: {data:IPost}) => {
   const editPost = useStore(state => state.editPost)
   const addComment = (event:any) => {
     event.preventDefault()
-    if (!commentRef.current.value || !data || !session?.user?.name || !session?.user?.image) return
+    if (!commentRef.current.value || !data || !session?.user?.name || !session?.user?.image || !session.id || typeof session.id !== 'string') return
+    console.log(session.id);
+    
     editPost({
       ...data, 
       comments: [
         {
           author: session.user.name,
+          author_id: session.id,
           author_image: session.user.image,
-          comment: commentRef.current.value
+          body: commentRef.current.value
         },
         ...(data.comments ? data.comments : []) 
       ]
