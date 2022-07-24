@@ -13,7 +13,6 @@ const Comments = ({data}: {data:IPost}) => {
   const addComment = (event:any) => {
     event.preventDefault()
     if (!commentRef.current.value || !data || !session?.user?.name || !session?.user?.image || !session.id || typeof session.id !== 'string') return
-    console.log(session.id);
     
     editPost({
       ...data, 

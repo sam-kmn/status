@@ -11,8 +11,8 @@ const NewPost = () => {
   const [newPost, setNewPost] = useState('')
 
   const upload = async () => {
-    if ( !session?.user?.name || !newPost || !session.id || session.id !== 'string') return
-    addPost({body: newPost, author: session.user.name, author_id: session.id})
+    if ( !session?.user?.name || !newPost || !session.id ) return
+    addPost({body: newPost, author: session.user.name, author_id: session.id as string})
     setNewPost('')
   }
 

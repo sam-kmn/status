@@ -2,6 +2,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import Post from "../../components/Post"
+import PostSkeleton from "../../components/PostSkeleton"
 import { IPost } from '../../models/Posts'
 
 interface IUserProfile {
@@ -26,10 +27,9 @@ const User = () => {
         const res = await (await fetch(process.env.NEXT_PUBLIC_URL + '/api/user/' + id)).json()
         if (!res.status) return router.push('/error')
         setUser(res.data)
-        console.log(res.data);
         
       } catch (error) {
-        console.log(error);
+        router.push('/error')
       }
 
       setLoading(false)
@@ -39,12 +39,21 @@ const User = () => {
 
   }, [id])
 
-  if (loading) return <div>Loading...</div>
+  if (loading) return (
+    <div className="flex flex-col items-center justify-center gap-5 py-10 px-5">
+      <header className="animate-pulse">
+        <div className="w-48 h-48 bg-neutral-800 rounded-full"></div>
+        <div className="w-48 h-6 bg-neutral-800 rounded-full my-5"></div>
+      </header>
+      <PostSkeleton />
+      <PostSkeleton />
+    </div>
+  )
 
   if (user) return (
     <div className="flex flex-col justify-center items-center gap-5 py-10 px-5">
       <header>
-        <img src={user.image} alt="User Avatar" className="rounded-full w-50 h-50" />
+        <img src={user.image} alt="User Avatar" className="rounded-full w-48 h-48" />
         <h1 className="text-2xl font-semibold text-center my-5">{user.name}</h1>
       </header>
 
