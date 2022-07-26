@@ -26,7 +26,7 @@ const Login = () => {
   }
 
   return (
-    <div className="h-full flex justify-center items-center">
+    <div className="dynamic-frame flex justify-center items-center">
       <form onSubmit={submit} className="flex-1 flex flex-col max-w-xs gap-3">
         <header className="text-4xl font-semibold text-center mb-5">Sign In</header>
         {message && <div className="bg-red-300 rounded text-center p-3">{message}</div> }
