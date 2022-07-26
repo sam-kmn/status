@@ -25,7 +25,7 @@ const Post = () => {
 
 
   return data && (
-    <div className='h-full flex flex-col gap-5 justify-start items-center overflow-hidden p-5'>
+    <div className='dynamic-frame flex flex-col gap-5 justify-start items-center overflow-hidden p-5'>
       <PostComponent post={data} />
       <Comments data={data} />
     </div>

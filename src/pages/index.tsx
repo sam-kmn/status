@@ -18,7 +18,7 @@ export default function Component() {
   
 
   if (loading) return (
-    <div className="flex flex-col items-center justify-center gap-5 py-10 px-5">
+    <div className="dynamic-frame flex flex-col gap-5 py-10 px-5">
       <PostSkeleton />
       <PostSkeleton />
       <PostSkeleton />
@@ -26,7 +26,7 @@ export default function Component() {
   )
 
   return  (
-    <div className="flex flex-col items-center justify-center gap-5 py-10 px-5">
+    <div className="dynamic-frame flex flex-col gap-5 py-10 px-5">
       
       <NewPost />
 

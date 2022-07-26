@@ -28,7 +28,7 @@ const Navbar = () => {
           
           {/* User and Logout */}
           <div className="flex gap-4">
-            <Link href={'/user/'+session.user.name}>
+            <Link href={'/user/'+session.id}>
               <img src={session.user?.image!} className='w-10 h-10 rounded-full cursor-pointer' alt="" />
             </Link>
 

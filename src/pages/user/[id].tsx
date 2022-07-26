@@ -40,7 +40,7 @@ const User = () => {
   }, [id])
 
   if (loading) return (
-    <div className="flex flex-col items-center justify-center gap-5 py-10 px-5">
+    <div className="dynamic-frame flex flex-col items-center gap-5 py-10 px-5">
       <header className="animate-pulse">
         <div className="w-48 h-48 bg-neutral-800 rounded-full"></div>
         <div className="w-48 h-6 bg-neutral-800 rounded-full my-5"></div>
@@ -51,7 +51,7 @@ const User = () => {
   )
 
   if (user) return (
-    <div className="flex flex-col justify-center items-center gap-5 py-10 px-5">
+    <div className="dynamic-frame flex flex-col items-center gap-5 py-10 px-5">
       <header>
         <img src={user.image} alt="User Avatar" className="rounded-full w-48 h-48" />
         <h1 className="text-2xl font-semibold text-center my-5">{user.name}</h1>
