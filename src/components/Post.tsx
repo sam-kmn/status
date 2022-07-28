@@ -76,13 +76,15 @@ const Post = ({post}: {post:any}) => {
       }
       
       {/* Content */}
-      <section className="text-2xl md:text-3xl py-3 font-semibold whitespace-pre-wrap">
+      <section className="text-2xl md:text-3xl py-3 whitespace-pre-wrap">
         {post.body}
       </section>
       
       {/* Comments, Likes, etc. */}
       <section className="flex justify-between ">
-        <div className="text-neutral-400">{post.comments.length} comments</div>
+        <Link href={'/post/' + post._id}>
+          <div className="text-neutral-400">{post.comments.length} comments</div>
+        </Link>
 
         <div className="flex items-center justify-center gap-2">
           <div className="text-lg">{post.likes.length}</div>

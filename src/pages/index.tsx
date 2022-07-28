@@ -30,13 +30,7 @@ export default function Component() {
       
       <NewPost />
 
-      {posts && posts.map((post:any) => ( 
-        <Link key={post._id} href={'/post/'+ post._id}>
-          <a className="w-full">
-            <Post post={post} />
-          </a>
-        </Link>
-      ))}
+      {posts && posts.map((post:any) => ( <Post key={post._id} post={post} /> ))}
 
     </div>
   )
